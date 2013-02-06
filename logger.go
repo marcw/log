@@ -18,7 +18,8 @@ type Logger interface {
 	Info(m string) (err error)
 	Notice(m string) (err error)
 	Warning(m string) (err error)
-	Write(m string) (err error)
+	Write(b []byte) (int, error)
+	Close() (err error)
 }
 
 // StdLogger is a proxy wrapping a standard log.Logger instance
@@ -30,8 +31,12 @@ func NewStdLogger(l *log.Logger) *StdLogger {
 	return &StdLogger{logger: l}
 }
 
-func (l *StdLogger) Write(m string) (err error) {
-	l.logger.Println(m)
+func (l *StdLogger) Write(b []byte) (int, error) {
+	l.logger.Println(string(b))
+	return len(b), nil
+}
+
+func (l *StdLogger) Close() (err error) {
 	return nil
 }
 

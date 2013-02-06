@@ -7,6 +7,7 @@ package gogol
 import (
 	"bytes"
 	"log"
+	"log/syslog"
 	"testing"
 )
 
@@ -15,7 +16,7 @@ func TestMultiLogger(t *testing.T) {
 	sl := NewStdLogger(log.New(b, "", 0))
 	l := MultiLogger(sl, sl)
 
-	l.Write("foobar")
+	l.Write([]byte("foobar"))
 	if b.String() != "foobar\nfoobar\n" {
 		t.Fatalf("Expected %#v. Found %#v instead.", "foobar\n", b.String())
 	}
@@ -67,4 +68,11 @@ func TestMultiLogger(t *testing.T) {
 	if b.String() != "ALERT foobar\nALERT foobar\n" {
 		t.Fatalf("Expected %#v. Found %#v instead.", "ALERT foobar\n", b.String())
 	}
+}
+
+func TestMultiLoggerAcceptsSyslog(t *testing.T) {
+	b := bytes.NewBuffer([]byte{})
+	sl := NewStdLogger(log.New(b, "", 0))
+	s, _ := syslog.New(syslog.LOG_DEBUG, "")
+	MultiLogger(sl, s)
 }

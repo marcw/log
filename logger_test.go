@@ -14,7 +14,7 @@ func TestStdLogger(t *testing.T) {
 	b := bytes.NewBuffer([]byte{})
 	l := NewStdLogger(log.New(b, "", 0))
 
-	l.Write("foobar")
+	l.Write([]byte("foobar"))
 	if b.String() != "foobar\n" {
 		t.Fatalf("Expected %#v. Found %#v instead.", "foobar\n", b.String())
 	}

@@ -14,14 +14,24 @@ type multiLogger struct {
 	loggers []Logger
 }
 
-func (logger *multiLogger) Write(m string) (err error) {
+func (logger *multiLogger) Close() (err error) {
 	for _, l := range logger.loggers {
-		if err := l.Write(m); err != nil {
+		if err := l.Close(); err != nil {
 			return err
 		}
 	}
 
 	return nil
+}
+
+func (logger *multiLogger) Write(b []byte) (int, error) {
+	for _, l := range logger.loggers {
+		if c, err := l.Write(b); err != nil {
+			return c, err
+		}
+	}
+
+	return len(b), nil
 }
 
 func (logger *multiLogger) Warning(m string) (err error) {
