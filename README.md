@@ -1,5 +1,7 @@
 # Gogol
 
+[![Build Status](https://travis-ci.org/marcw/gogol.png?branch=master)](https://travis-ci.org/marcw/gogol)
+
 A `log/syslog` interface to `log` for the [go language](http://golang.org).
 
 ## Why?
