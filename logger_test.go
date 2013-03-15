@@ -11,7 +11,7 @@ import (
 )
 
 func ExampleLogger() {
-	handler := NewStdoutHandler(WARNING) // Will log all messages where severity is >= that WARNING
+	handler := NewStdoutHandler(WARNING) // Will log all messages where severity is >= WARNING
 	handler.SetFormatter(NewMinimalLineFormatter())
 	logger := NewLogger("example", []Handler{handler}, []Processor{})
 	logger.Debug("Debug message that won't be displayed")
