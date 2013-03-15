@@ -2,88 +2,144 @@
 // Use of this source code is governed by a MIT
 // license that can be found in the LICENSE file.
 
-// A `log/syslog` interface to `log` with a user MultiLogger implementation
 package gogol
 
 import (
-	"log"
+	"fmt"
 )
 
-type Logger interface {
-	Alert(m string) (err error)
-	Crit(m string) (err error)
-	Debug(m string) (err error)
-	Emerg(m string) (err error)
-	Err(m string) (err error)
-	Info(m string) (err error)
-	Notice(m string) (err error)
-	Warning(m string) (err error)
-	Write(b []byte) (int, error)
-	Close() (err error)
+type Logger struct {
+	Name       string
+	handlers   []Handler
+	processors []Processor
 }
 
-// StdLogger is a proxy wrapping a standard log.Logger instance
-type StdLogger struct {
-	logger *log.Logger
+func NewLogger(name string, handlers []Handler, processors []Processor) *Logger {
+	return &Logger{Name: name, handlers: handlers, processors: processors}
 }
 
-func NewStdLogger(l *log.Logger) *StdLogger {
-	return &StdLogger{logger: l}
+func (l *Logger) PushHandler(h Handler) {
+	handlers := make([]Handler, len(l.handlers))
+	copy(handlers, l.handlers)
+
+	l.handlers = []Handler{h}
+	l.handlers = append(l.handlers, handlers...)
 }
 
-func (l *StdLogger) Write(b []byte) (int, error) {
-	l.logger.Println(string(b))
-	return len(b), nil
+func (l *Logger) PopHandler() {
+	if len(l.handlers) > 0 {
+		l.handlers = l.handlers[1:len(l.handlers)]
+        return
+	}
+
+	panic("Handlers stack is empty")
 }
 
-func (l *StdLogger) Close() (err error) {
-	return nil
+func (l *Logger) PushProcessor(p Processor) {
+	processors := make([]Processor, len(l.processors))
+	copy(processors, l.processors)
+
+	l.processors = []Processor{p}
+	l.processors = append(l.processors, processors...)
 }
 
-// Prefix m with WARNING and write it
-func (l *StdLogger) Warning(m string) (err error) {
-	l.logger.Println("WARNING", m)
-	return nil
+func (l *Logger) PopProcessor() {
+	if len(l.processors) > 0 {
+		l.processors = l.processors[1:len(l.processors)]
+        return
+	}
+
+	panic("Processors stack is empty")
 }
 
-// Prefix m with NOTICE and write it
-func (l *StdLogger) Notice(m string) (err error) {
-	l.logger.Println("NOTICE", m)
-	return nil
+func (l *Logger) AddRecord(level Severity, message string) {
+	r := newRecord(level, l.Name, message)
+
+	if !l.IsHandling(level) {
+		return
+	}
+
+	for k := range l.processors {
+		l.processors[k].Process(r)
+	}
+
+	for k := range l.handlers {
+		if l.handlers[k].IsHandling(level) {
+			l.handlers[k].Handle(r)
+		}
+	}
 }
 
-// Prefix m with INFO and write it
-func (l *StdLogger) Info(m string) (err error) {
-	l.logger.Println("INFO", m)
-	return nil
+func (l *Logger) AddDebug(message string) {
+	l.AddRecord(DEBUG, message)
 }
 
-// Prefix m with ERR and write it
-func (l *StdLogger) Err(m string) (err error) {
-	l.logger.Println("ERR", m)
-	return nil
+func (l *Logger) AddInfo(message string) {
+	l.AddRecord(INFO, message)
 }
 
-// Prefix m with EMERG and write it
-func (l *StdLogger) Emerg(m string) (err error) {
-	l.logger.Println("EMERG", m)
-	return nil
+func (l *Logger) AddNotice(message string) {
+	l.AddRecord(NOTICE, message)
 }
 
-// Prefix m with DEBUG and write it
-func (l *StdLogger) Debug(m string) (err error) {
-	l.logger.Println("DEBUG", m)
-	return nil
+func (l *Logger) AddWarning(message string) {
+	l.AddRecord(WARNING, message)
 }
 
-// Prefix m with CRIT and write it
-func (l *StdLogger) Crit(m string) (err error) {
-	l.logger.Println("CRIT", m)
-	return nil
+func (l *Logger) AddError(message string) {
+	l.AddRecord(ERROR, message)
 }
 
-// Prefix m with ALERT and write it
-func (l *StdLogger) Alert(m string) (err error) {
-	l.logger.Println("ALERT", m)
-	return nil
+func (l *Logger) AddCritical(message string) {
+	l.AddRecord(CRITICAL, message)
+}
+
+func (l *Logger) AddAlert(message string) {
+	l.AddRecord(ALERT, message)
+}
+
+func (l *Logger) AddEmergency(message string) {
+	l.AddRecord(EMERGENCY, message)
+}
+
+func (l *Logger) Debug(v ...interface{}) {
+	l.AddDebug(fmt.Sprint(v...))
+}
+
+func (l *Logger) Info(v ...interface{}) {
+	l.AddInfo(fmt.Sprint(v...))
+}
+
+func (l *Logger) Notice(v ...interface{}) {
+	l.AddNotice(fmt.Sprint(v...))
+}
+
+func (l *Logger) Warning(v ...interface{}) {
+	l.AddWarning(fmt.Sprint(v...))
+}
+
+func (l *Logger) Error(v ...interface{}) {
+	l.AddError(fmt.Sprint(v...))
+}
+
+func (l *Logger) Critical(v ...interface{}) {
+	l.AddCritical(fmt.Sprint(v...))
+}
+
+func (l *Logger) Alert(v ...interface{}) {
+	l.AddAlert(fmt.Sprint(v...))
+}
+
+func (l *Logger) Emergency(v ...interface{}) {
+	l.AddEmergency(fmt.Sprint(v...))
+}
+
+func (l *Logger) IsHandling(level Severity) bool {
+	for k := range l.handlers {
+		if l.handlers[k].IsHandling(level) {
+			return true
+		}
+	}
+
+	return false
 }
