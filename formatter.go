@@ -13,9 +13,14 @@ type Formatter interface {
 }
 
 const LINE_FORMAT_SIMPLE = "[%datetime%] %channel%.%level_name%: %message% %extra%\n"
+const LINE_FORMAT_MINIMAL = "%channel%.%level_name%: %message%\n"
 
 type LineFormatter struct {
 	LineFormat string
+}
+
+func NewMinimalLineFormatter() Formatter {
+	return &LineFormatter{LineFormat: LINE_FORMAT_MINIMAL}
 }
 
 func NewSimpleLineFormatter() Formatter {

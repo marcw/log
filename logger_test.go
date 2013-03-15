@@ -10,6 +10,18 @@ import (
 	"time"
 )
 
+func ExampleLogger() {
+	handler := NewStdoutHandler(WARNING) // Will log all messages where severity is >= that WARNING
+	handler.SetFormatter(NewMinimalLineFormatter())
+	logger := NewLogger("example", []Handler{handler}, []Processor{})
+	logger.Debug("Debug message that won't be displayed")
+	logger.Warning("I sense a disturbance in the force")
+	logger.Error("This is an error")
+	// Output:
+	// example.WARNING: I sense a disturbance in the force
+	// example.ERROR: This is an error
+}
+
 func TestLogger(t *testing.T) {
 	buffer := new(bytes.Buffer)
 	handler := NewBufferHandler(buffer, NOTICE)
