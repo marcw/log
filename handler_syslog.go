@@ -13,7 +13,7 @@ type syslogHandler struct {
 	*handler
 }
 
-// Instanciates a new Handler which will write on syslog when level is reached.
+// Instantiates a new Handler which will write on syslog when level is reached.
 func NewSyslogHandler(sw *syslog.Writer, level Severity) Handler {
 	return &syslogHandler{sw, &handler{level: level}}
 }

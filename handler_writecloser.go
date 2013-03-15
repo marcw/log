@@ -14,17 +14,17 @@ type writeCloserHandler struct {
 	*handler
 }
 
-// Instanciates a new Handler which will write on wc when level is reached.
+// Instantiates a new Handler which will write on wc when level is reached.
 func NewWriteCloserHandler(wc io.WriteCloser, level Severity) Handler {
 	return &writeCloserHandler{wc, &handler{level: level}}
 }
 
-// Instanciates a new Handler which will write on Stdout when level is reached.
+// Instantiates a new Handler which will write on Stdout when level is reached.
 func NewStdoutHandler(level Severity) Handler {
 	return NewWriteCloserHandler(os.Stdout, level)
 }
 
-// Instanciates a new Handler which will write on Stderr when level is reached.
+// Instantiates a new Handler which will write on Stderr when level is reached.
 func NewStderrHandler(level Severity) Handler {
 	return NewWriteCloserHandler(os.Stderr, level)
 }
