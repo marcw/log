@@ -37,5 +37,3 @@ func (wch *writeCloserHandler) Handle(r *Record) {
 	wch.handler.Prepare(r)
 	wch.wc.Write([]byte(r.Formatted))
 }
-
-

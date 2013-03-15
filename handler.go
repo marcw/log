@@ -55,7 +55,7 @@ func (h *handler) PushProcessor(p Processor) {
 func (h *handler) PopProcessor() {
 	if len(h.processors) > 0 {
 		h.processors = h.processors[1:len(h.processors)]
-        return
+		return
 	}
 
 	panic("Processors stack is empty")

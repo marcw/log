@@ -31,4 +31,3 @@ func runtimeProcessor(r *Record) {
 	r.Extra["go.version"] = runtime.Version()
 	r.Extra["go.num_goroutines"] = runtime.NumGoroutine()
 }
-

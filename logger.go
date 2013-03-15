@@ -29,7 +29,7 @@ func (l *Logger) PushHandler(h Handler) {
 func (l *Logger) PopHandler() {
 	if len(l.handlers) > 0 {
 		l.handlers = l.handlers[1:len(l.handlers)]
-        return
+		return
 	}
 
 	panic("Handlers stack is empty")
@@ -46,7 +46,7 @@ func (l *Logger) PushProcessor(p Processor) {
 func (l *Logger) PopProcessor() {
 	if len(l.processors) > 0 {
 		l.processors = l.processors[1:len(l.processors)]
-        return
+		return
 	}
 
 	panic("Processors stack is empty")
