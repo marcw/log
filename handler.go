@@ -6,7 +6,7 @@ package gogol
 
 // A Handler is an interface that sends log to a destination
 type Handler interface {
-	IsHandling(Severity) bool // The handler accepts this severity
+	IsHandling(Severity) bool // Returns true if the handler accepts this severity
 	Handle(*Record)           // Handle the log record
 	PushProcessor(Processor)  // Push a new processor to the handler's stack
 	PopProcessor()            // Removes a processor from the handler's stack

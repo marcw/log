@@ -8,9 +8,11 @@ import (
 	"runtime"
 )
 
-// RuntimeProcessor adds some information about the current go runtime
+// RuntimeProcessor adds some information about the current go runtime to a log record
 var RuntimeProcessor = NewProcessor(runtimeProcessor)
 
+// A processor transforms a log records in whatever way it wants.
+// It is usefull to add extra information to a log record
 type Processor interface {
 	Process(*Record)
 }
