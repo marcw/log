@@ -12,16 +12,18 @@ import (
 type Severity int
 
 const (
+	// From /usr/include/sys/syslog.h. and RFC5424
 	EMERGENCY Severity = iota // Emergency: system is unusable
-	ALERT                     //  Alert: action must be taken immediately
+	ALERT                     // Alert: action must be taken immediately
 	CRITICAL                  // Critical: critical conditions
 	ERROR                     // Error: error conditions
-	WARNING                   //  Warning: warning conditions
+	WARNING                   // Warning: warning conditions
 	NOTICE                    // Notice: normal but significant condition
 	INFO                      // Informational: informational messages
-	DEBUG                     //Debug: debug-level messages
+	DEBUG                     // Debug: debug-level messages
 )
 
+// Textual translation of severities
 var Severities = map[Severity]string{
 	DEBUG:     "DEBUG",
 	INFO:      "INFO",
@@ -32,18 +34,20 @@ var Severities = map[Severity]string{
 	ALERT:     "ALERT",
 	EMERGENCY: "EMERGENCY"}
 
+// A record is a log message at a given time
 type Record struct {
-	Message   string
-	Formatted string
-	Level     Severity
-	LevelName string
-	Channel   string
-	Time      string
-	Extra     Extra
+	Message   string   // Text message of the log
+	Formatted string   // Formatted version of the log (once all processors and formatters have done their jobs)
+	Level     Severity // Severity level
+	LevelName string   // Severity name
+	Channel   string   // Logger's name
+	Time      string   // Creation date formated to time.RFC3339Nano
+	Extra     Extra    // Extra values that can be added by Processors
 }
 
 type Extra map[string]interface{}
 
+// Normalize data to a map of string
 func (e Extra) Normalize() map[string]string {
 	normalized := make(map[string]string)
 

@@ -13,6 +13,7 @@ type bufferHandler struct {
 	*handler
 }
 
+// Instantiates a new handler that will keep logs in memory
 func NewBufferHandler(buffer *bytes.Buffer, level Severity) Handler {
 	return &bufferHandler{buffer, &handler{level: level}}
 }

@@ -8,6 +8,7 @@ import (
 	"runtime"
 )
 
+// RuntimeProcessor adds some information about the current go runtime
 var RuntimeProcessor = NewProcessor(runtimeProcessor)
 
 type Processor interface {
@@ -18,6 +19,7 @@ type processor struct {
 	process func(*Record)
 }
 
+// NewProcessor wraps a function to a Processor
 func NewProcessor(f func(*Record)) Processor {
 	return &processor{process: f}
 }

@@ -4,14 +4,15 @@
 
 package gogol
 
+// A Handler is an interface that sends log to a destination
 type Handler interface {
-	IsHandling(Severity) bool
-	Handle(*Record)
-	PushProcessor(Processor)
-	PopProcessor()
-	SetFormatter(Formatter)
-	GetFormatter() Formatter
-	Close()
+	IsHandling(Severity) bool // The handler accepts this severity
+	Handle(*Record)           // Handle the log record
+	PushProcessor(Processor)  // Push a new processor to the handler's stack
+	PopProcessor()            // Removes a processor from the handler's stack
+	SetFormatter(Formatter)   // Set the formatter for this handler
+	GetFormatter() Formatter  // Returns the formatter used by this handler
+	Close()                   // Close the handler
 }
 
 type handler struct {
