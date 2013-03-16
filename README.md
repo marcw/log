@@ -17,7 +17,8 @@ Documentation is available at [godoc.org](http://godoc.org/github.com/marcw/gogo
 
 ## Acknowledgements
 
-This package is heavily inspired by Jordi Borgiano's monolog library.
+This package is heavily inspired by Jordi Boggiano's 
+[monolog](https://github.com/seldaek/monolog) library.
 
 ## License
 
