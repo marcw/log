@@ -4,6 +4,11 @@
 
 A log package based on PHP's excellent Monolog library.
 
+## WARNING
+
+The API is not yet STABLE. Some things WILL change. Please wait for a 1.0
+release if you're not kin to update your code from time to time.
+
 ## Why?
 
 I felt really limited by the implementation of `log` and `log/syslog` packages.
