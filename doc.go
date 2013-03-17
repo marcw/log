@@ -11,12 +11,20 @@ gogol is a log package heavily inspired by monolog/logbook.
         log "github.com/marcw/gogol"
     )
 
-    h1 := log.NewStdoutLogger(DEBUG)  // Will log to stdout every message where severity >= DEBUG
-    h2 := log.NewStderrLogger(ERR)    // Will log to stderr every message where severity >= ERROR
+    // Will log to stdout every message where severity >= DEBUG
+    h1 := log.NewStdoutLogger(DEBUG)
+    // Will log to stderr every message where severity >= ERROR
+    h2 := log.NewStderrLogger(ERR)
 
-    logger := log.NewLogger("channel_name", []log.Handler{h1, h2}, []log.Processor{})
-    logger.PushProcessor(log.RuntimeProcessor) // Will add to log lines some informations about the go runtime
-    logger.Debug("This is debug")              // Will output to stdout "This is debug"
-    logger.Critical("This is critical")        // Will output to both stdout and stderr "This is critical"
+    logger := log.NewLogger("channel_name")
+
+    // Will add to log lines some informations about the go runtime
+    logger.PushProcessor(log.RuntimeProcessor)
+
+    // Will output to stdout "This is debug"
+    logger.Debug("This is debug")
+
+    // Will output to both stdout and stderr "This is critical"
+    logger.Critical("This is critical")
 */
 package gogol

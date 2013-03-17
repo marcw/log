@@ -18,7 +18,8 @@ func ExampleLogger() {
 	handler.SetFormatter(NewMinimalLineFormatter())
 
 	// Instantiates a new logger with "example" as name
-	logger := NewLogger("example", []Handler{handler}, []Processor{})
+	logger := NewLogger("example")
+	logger.PushHandler(handler)
 
 	// Start logging
 	logger.Debug("Debug message that won't be displayed")
@@ -33,7 +34,8 @@ func TestLogger(t *testing.T) {
 	buffer := new(bytes.Buffer)
 	handler := NewBufferHandler(buffer, NOTICE)
 	handler.SetFormatter(&LineFormatter{"%channel%.%level_name%: %message%"})
-	logger := NewLogger("test", []Handler{handler}, []Processor{})
+	logger := NewLogger("test")
+	logger.PushHandler(handler)
 
 	logger.Debug("foobar")
 	if "" != buffer.String() {
@@ -80,7 +82,7 @@ func TestLoggerPushPopProcessors(t *testing.T) {
 	p1 := NewProcessor(func(r *Record) {}) // Will be called last
 	p2 := NewProcessor(func(r *Record) {})
 
-	l := NewLogger("test", []Handler{}, []Processor{})
+	l := NewLogger("test")
 	l.PushProcessor(p1)
 	l.PushProcessor(p2)
 
@@ -132,7 +134,7 @@ func TestLoggerWithDefaultProcessor(t *testing.T) {
 	buffer := new(bytes.Buffer)
 	h1 := NewBufferHandler(buffer, DEBUG)
 	h1.SetFormatter(&LineFormatter{"%message% %extra%"})
-	l := NewLogger("channel", []Handler{}, []Processor{})
+	l := NewLogger("channel")
 	l.PushHandler(h1)
 	p := NewProcessor(func(r *Record) {
 		r.Extra["go.date"] = time.Date(2009, 11, 10, 23, 0, 0, 0, time.UTC)

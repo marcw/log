@@ -16,8 +16,8 @@ type Logger struct {
 }
 
 // Instanciates a new logger with specified name, handlers and processors
-func NewLogger(name string, handlers []Handler, processors []Processor) *Logger {
-	return &Logger{Name: name, handlers: handlers, processors: processors}
+func NewLogger(name string) *Logger {
+	return &Logger{Name: name, handlers: []Handler{}, processors: []Processor{}}
 }
 
 // Push a handler to the handlers stack
