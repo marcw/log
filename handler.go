@@ -15,7 +15,8 @@ type HandlerInterface interface {
 	Close()                   // Close the handler
 }
 
-// Handler is a type you can
+// Handler is a somewhat a "abstract" type you can embed in your own handler.
+// It provides easiness in writing your own handlers
 type Handler struct {
 	Level      Severity
 	Formatter  Formatter
