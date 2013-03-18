@@ -6,6 +6,7 @@ package gogol
 
 import (
 	"strings"
+	"time"
 )
 
 // A formatter formats the record before being sent to a Handler
@@ -29,22 +30,26 @@ const (
 // %extra%: All extra values, generally added by Processors
 type LineFormatter struct {
 	LineFormat string
+	TimeFormat string // Time format that will be used. Default is time.RFC3339Nano
 }
 
-// Instantiates a new LineFormatter with the LINE_FORMAT_MINIMAL format
+// Instantiates a new LineFormatter with the LineFormatMinimal format
 func NewMinimalLineFormatter() Formatter {
 	return &LineFormatter{LineFormat: LineFormatMinimal}
 }
 
-// Instantiates a new LineFormatter with the LINE_FORMAT_SIMPLE format
+// Instantiates a new LineFormatter with the LineFormatSimple format
 func NewSimpleLineFormatter() Formatter {
 	return &LineFormatter{LineFormat: LineFormatSimple}
 }
 
 // Format the Record r with f.LineFormat
 func (f *LineFormatter) Format(r *Record) {
+	if f.TimeFormat == "" {
+		f.TimeFormat = time.RFC3339Nano
+	}
 	replacer := strings.NewReplacer(
-		"%datetime%", r.Time,
+		"%datetime%", r.Time.Format(f.TimeFormat),
 		"%channel%", r.Channel,
 		"%level_name%", r.LevelName,
 		"%message%", r.Message,

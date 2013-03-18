@@ -36,13 +36,13 @@ var Severities = map[Severity]string{
 
 // A record is a log message at a given time
 type Record struct {
-	Message   string   // Text message of the log
-	Formatted string   // Formatted version of the log (once all processors and formatters have done their jobs)
-	Level     Severity // Severity level
-	LevelName string   // Severity name
-	Channel   string   // Logger's name
-	Time      string   // Creation date formated to time.RFC3339Nano
-	Extra     Extra    // Extra values that can be added by Processors
+	Message   string    // Text message of the log
+	Formatted string    // Formatted version of the log (once all processors and formatters have done their jobs)
+	Level     Severity  // Severity level
+	LevelName string    // Severity name
+	Channel   string    // Logger's name
+	Time      time.Time // Creation date
+	Extra     Extra     // Extra values that can be added by Processors
 }
 
 type Extra map[string]interface{}
@@ -78,6 +78,6 @@ func newRecord(level Severity, channel, message string) *Record {
 		Level:     level,
 		LevelName: Severities[level],
 		Channel:   channel,
-		Time:      time.Now().Format(time.RFC3339Nano),
+		Time:      time.Now(),
 		Extra:     make(Extra)}
 }

@@ -33,7 +33,7 @@ func ExampleLogger() {
 func TestLogger(t *testing.T) {
 	buffer := new(bytes.Buffer)
 	handler := NewBufferHandler(buffer, NOTICE)
-	handler.SetFormatter(&LineFormatter{"%channel%.%level_name%: %message%"})
+	handler.SetFormatter(&LineFormatter{LineFormat: "%channel%.%level_name%: %message%"})
 	logger := NewLogger("test")
 	logger.PushHandler(handler)
 
@@ -133,7 +133,7 @@ func TestLoggerPushPopHandler(t *testing.T) {
 func TestLoggerWithDefaultProcessor(t *testing.T) {
 	buffer := new(bytes.Buffer)
 	h1 := NewBufferHandler(buffer, DEBUG)
-	h1.SetFormatter(&LineFormatter{"%message% %extra%"})
+	h1.SetFormatter(&LineFormatter{LineFormat: "%message% %extra%"})
 	l := NewLogger("channel")
 	l.PushHandler(h1)
 	p := NewProcessor(func(r *Record) {
