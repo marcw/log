@@ -15,8 +15,8 @@ type Formatter interface {
 }
 
 const (
-	LINE_FORMAT_SIMPLE  string = "[%datetime%] %channel%.%level_name%: %message% %extra%\n"
-	LINE_FORMAT_MINIMAL string = "%channel%.%level_name%: %message%\n"
+	LineFormatSimple  string = "[%datetime%] %channel%.%level_name%: %message% %extra%\n"
+	LineFormatMinimal string = "%channel%.%level_name%: %message%\n"
 )
 
 // A line formatter formats a Record into a line of text.
@@ -33,12 +33,12 @@ type LineFormatter struct {
 
 // Instantiates a new LineFormatter with the LINE_FORMAT_MINIMAL format
 func NewMinimalLineFormatter() Formatter {
-	return &LineFormatter{LineFormat: LINE_FORMAT_MINIMAL}
+	return &LineFormatter{LineFormat: LineFormatMinimal}
 }
 
 // Instantiates a new LineFormatter with the LINE_FORMAT_SIMPLE format
 func NewSimpleLineFormatter() Formatter {
-	return &LineFormatter{LineFormat: LINE_FORMAT_SIMPLE}
+	return &LineFormatter{LineFormat: LineFormatSimple}
 }
 
 // Format the Record r with f.LineFormat
