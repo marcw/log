@@ -6,10 +6,12 @@ package gogol
 
 import (
 	"fmt"
+	"sync"
 )
 
 // A logger will log records transformed by the default processors to a collection of handlers
 type Logger struct {
+	mu         sync.Mutex
 	Name       string
 	handlers   []Handler
 	processors []Processor
@@ -22,6 +24,8 @@ func NewLogger(name string) *Logger {
 
 // Push a handler to the handlers stack
 func (l *Logger) PushHandler(h Handler) {
+	l.mu.Lock()
+	defer l.mu.Unlock()
 	handlers := make([]Handler, len(l.handlers))
 	copy(handlers, l.handlers)
 
@@ -31,6 +35,8 @@ func (l *Logger) PushHandler(h Handler) {
 
 // Pop a handler from the handlers stack
 func (l *Logger) PopHandler() {
+	l.mu.Lock()
+	defer l.mu.Unlock()
 	if len(l.handlers) > 0 {
 		l.handlers = l.handlers[1:len(l.handlers)]
 		return
@@ -41,6 +47,8 @@ func (l *Logger) PopHandler() {
 
 // Push a processor to the processor stack
 func (l *Logger) PushProcessor(p Processor) {
+	l.mu.Lock()
+	defer l.mu.Unlock()
 	processors := make([]Processor, len(l.processors))
 	copy(processors, l.processors)
 
@@ -50,6 +58,8 @@ func (l *Logger) PushProcessor(p Processor) {
 
 // Pop a processor from the processor stack
 func (l *Logger) PopProcessor() {
+	l.mu.Lock()
+	defer l.mu.Unlock()
 	if len(l.processors) > 0 {
 		l.processors = l.processors[1:len(l.processors)]
 		return
@@ -60,6 +70,8 @@ func (l *Logger) PopProcessor() {
 
 // Log string with specified severity
 func (l *Logger) AddRecord(level Severity, message string) {
+	l.mu.Lock()
+	defer l.mu.Unlock()
 	r := newRecord(level, l.Name, message)
 
 	if !l.IsHandling(level) {
