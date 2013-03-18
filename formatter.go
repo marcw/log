@@ -16,7 +16,7 @@ type Formatter interface {
 }
 
 const (
-	LineFormatSimple  string = "[%datetime%] %channel%.%level_name%: %message% %extra%\n"
+	LineFormatSimple  string = "[%datetime%] %channel%.%level_name%: %message% %context% %extra%\n"
 	LineFormatMinimal string = "%channel%.%level_name%: %message%\n"
 )
 
@@ -53,6 +53,7 @@ func (f *LineFormatter) Format(r *Record) {
 		"%channel%", r.Channel,
 		"%level_name%", r.LevelName,
 		"%message%", r.Message,
+		"%context%", r.Context.String(),
 		"%extra%", r.Extra.String())
 
 	r.Formatted = replacer.Replace(f.LineFormat)

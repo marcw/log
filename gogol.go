@@ -5,6 +5,7 @@
 package gogol
 
 import (
+	"encoding/json"
 	"fmt"
 	"time"
 )
@@ -42,13 +43,14 @@ type Record struct {
 	LevelName string    // Severity name
 	Channel   string    // Logger's name
 	Time      time.Time // Creation date
-	Extra     Extra     // Extra values that can be added by Processors
+	Context   DataBag   // Context set by logger's caller
+	Extra     DataBag   // Extra values that can be added by Processors
 }
 
-type Extra map[string]interface{}
+type DataBag map[string]interface{}
 
 // Normalize data to a map of string
-func (e Extra) Normalize() map[string]string {
+func (e DataBag) Normalize() map[string]string {
 	normalized := make(map[string]string)
 
 	for k, v := range e {
@@ -67,17 +69,22 @@ func (e Extra) Normalize() map[string]string {
 	return normalized
 }
 
-func (e Extra) String() string {
-	// TODO: This is a really shitty way to convert this map to a string
-	return fmt.Sprint(e.Normalize())
+func (e DataBag) String() string {
+	json, _ := json.Marshal(e.Normalize())
+	return string(json)
 }
 
-func newRecord(level Severity, channel, message string) *Record {
+func (e DataBag) Add(key string, v interface{}) {
+	e[key] = v
+}
+
+func newRecord(level Severity, channel, message string, context DataBag) *Record {
 	return &Record{
 		Message:   message,
 		Level:     level,
 		LevelName: Severities[level],
 		Channel:   channel,
 		Time:      time.Now(),
-		Extra:     make(Extra)}
+		Context:   context,
+		Extra:     make(DataBag)}
 }

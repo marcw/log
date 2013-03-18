@@ -10,7 +10,9 @@ import (
 )
 
 func TestRuntimeProcessor(t *testing.T) {
-	r := newRecord(DEBUG, "test", "foobar")
+	context := make(DataBag)
+	context["foo"] = "bar"
+	r := newRecord(DEBUG, "test", "foobar", context)
 	RuntimeProcessor.Process(r)
 	if r.Extra["go.num_cpu"] != runtime.NumCPU() {
 		t.Error()

@@ -10,7 +10,9 @@ import (
 )
 
 func TestMinimalLineFormatter(t *testing.T) {
-	r := newRecord(DEBUG, "foobar", "msg")
+	context := make(DataBag)
+	context["foo"] = "bar"
+	r := newRecord(DEBUG, "foobar", "msg", context)
 	formatter := NewMinimalLineFormatter()
 	formatter.Format(r)
 	if r.Formatted != "foobar.DEBUG: msg\n" {
@@ -19,11 +21,13 @@ func TestMinimalLineFormatter(t *testing.T) {
 }
 
 func TestSimpleLineFormatter(t *testing.T) {
-	r := newRecord(DEBUG, "foobar", "msg")
+	context := make(DataBag)
+	context["foo"] = "bar"
+	r := newRecord(DEBUG, "foobar", "msg", context)
 	r.Time = time.Date(2009, 11, 10, 23, 0, 0, 0, time.UTC)
 	formatter := NewSimpleLineFormatter()
 	formatter.Format(r)
-	if r.Formatted != "[2009-11-10T23:00:00Z] foobar.DEBUG: msg map[]\n" {
+	if r.Formatted != "[2009-11-10T23:00:00Z] foobar.DEBUG: msg {\"foo\":\"bar\"} {}\n" {
 		t.Error(r.Formatted)
 	}
 }
