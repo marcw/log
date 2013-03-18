@@ -11,21 +11,21 @@ import (
 
 type writeCloserHandler struct {
 	wc io.WriteCloser
-	*handler
+	*Handler
 }
 
 // Instantiates a new Handler which will write on wc when level is reached.
-func NewWriteCloserHandler(wc io.WriteCloser, level Severity) Handler {
-	return &writeCloserHandler{wc, &handler{level: level}}
+func NewWriteCloserHandler(wc io.WriteCloser, level Severity) HandlerInterface {
+	return &writeCloserHandler{wc, &Handler{Level: level}}
 }
 
 // Instantiates a new Handler which will write on Stdout when level is reached.
-func NewStdoutHandler(level Severity) Handler {
+func NewStdoutHandler(level Severity) HandlerInterface {
 	return NewWriteCloserHandler(os.Stdout, level)
 }
 
 // Instantiates a new Handler which will write on Stderr when level is reached.
-func NewStderrHandler(level Severity) Handler {
+func NewStderrHandler(level Severity) HandlerInterface {
 	return NewWriteCloserHandler(os.Stderr, level)
 }
 
@@ -34,6 +34,6 @@ func (wch *writeCloserHandler) Close() {
 }
 
 func (wch *writeCloserHandler) Handle(r *Record) {
-	wch.handler.Prepare(r)
+	wch.Handler.Prepare(r)
 	wch.wc.Write([]byte(r.Formatted))
 }

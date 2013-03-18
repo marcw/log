@@ -4,8 +4,8 @@
 
 package gogol
 
-// A Handler is an interface that sends log to a destination
-type Handler interface {
+// HandlerInterface represents a type that sends log to a destination
+type HandlerInterface interface {
 	IsHandling(Severity) bool // Returns true if the handler accepts this severity
 	Handle(*Record)           // Handle the log record
 	PushProcessor(Processor)  // Push a new processor to the handler's stack
@@ -15,53 +15,57 @@ type Handler interface {
 	Close()                   // Close the handler
 }
 
-type handler struct {
-	level      Severity
-	formatter  Formatter
-	processors []Processor
+// Handler is a type you can
+type Handler struct {
+	Level      Severity
+	Formatter  Formatter
+	Processors []Processor
 }
 
-func (h *handler) IsHandling(level Severity) bool {
-	return level <= h.level
+func (h *Handler) IsHandling(level Severity) bool {
+	return level <= h.Level
 }
 
-func (h *handler) SetFormatter(f Formatter) {
-	h.formatter = f
+func (h *Handler) SetFormatter(f Formatter) {
+	h.Formatter = f
 }
 
-func (h *handler) GetFormatter() Formatter {
-	return h.formatter
+func (h *Handler) GetFormatter() Formatter {
+	return h.Formatter
 }
 
-func (h *handler) Prepare(r *Record) {
-	h.process(r)
-	h.formatter.Format(r)
+func (h *Handler) Prepare(r *Record) {
+	h.Process(r)
+	if h.Formatter == nil {
+		h.Formatter = NewSimpleLineFormatter()
+	}
+	h.Formatter.Format(r)
 }
 
-func (h *handler) process(r *Record) {
-	for k := range h.processors {
-		h.processors[k].Process(r)
+func (h *Handler) Process(r *Record) {
+	for k := range h.Processors {
+		h.Processors[k].Process(r)
 	}
 }
 
-func (h *handler) PushProcessor(p Processor) {
-	processors := make([]Processor, len(h.processors))
+func (h *Handler) PushProcessor(p Processor) {
+	processors := make([]Processor, len(h.Processors))
 
-	copy(processors, h.processors)
+	copy(processors, h.Processors)
 
-	h.processors = []Processor{p}
-	h.processors = append(h.processors, processors...)
+	h.Processors = []Processor{p}
+	h.Processors = append(h.Processors, processors...)
 }
 
-func (h *handler) PopProcessor() {
-	if len(h.processors) > 0 {
-		h.processors = h.processors[1:len(h.processors)]
+func (h *Handler) PopProcessor() {
+	if len(h.Processors) > 0 {
+		h.Processors = h.Processors[1:len(h.Processors)]
 		return
 	}
 
 	panic("Processors stack is empty")
 }
 
-func (h *handler) Write() {
+func (h *Handler) Write() {
 	// NO OP
 }

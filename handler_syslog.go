@@ -10,12 +10,12 @@ import (
 
 type syslogHandler struct {
 	w *syslog.Writer
-	*handler
+	*Handler
 }
 
 // Instantiates a new Handler which will write on syslog when level is reached.
-func NewSyslogHandler(sw *syslog.Writer, level Severity) Handler {
-	return &syslogHandler{sw, &handler{level: level}}
+func NewSyslogHandler(sw *syslog.Writer, level Severity) HandlerInterface {
+	return &syslogHandler{sw, &Handler{Level: level}}
 }
 
 func (sh *syslogHandler) Close() {
@@ -23,7 +23,7 @@ func (sh *syslogHandler) Close() {
 }
 
 func (sh *syslogHandler) Handle(r *Record) {
-	sh.handler.Prepare(r)
+	sh.Handler.Prepare(r)
 	switch r.Level {
 	case DEBUG:
 		sh.w.Debug(r.Formatted)

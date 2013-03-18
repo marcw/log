@@ -10,16 +10,16 @@ import (
 
 type bufferHandler struct {
 	buffer *bytes.Buffer
-	*handler
+	*Handler
 }
 
 // Instantiates a new handler that will keep logs in memory
-func NewBufferHandler(buffer *bytes.Buffer, level Severity) Handler {
-	return &bufferHandler{buffer, &handler{level: level}}
+func NewBufferHandler(buffer *bytes.Buffer, level Severity) HandlerInterface {
+	return &bufferHandler{buffer, &Handler{Level: level}}
 }
 
 func (bh *bufferHandler) Handle(r *Record) {
-	bh.handler.Prepare(r)
+	bh.Handler.Prepare(r)
 	bh.buffer.WriteString(r.Formatted)
 }
 

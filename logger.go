@@ -13,23 +13,23 @@ import (
 type Logger struct {
 	mu         sync.Mutex
 	Name       string
-	handlers   []Handler
+	handlers   []HandlerInterface
 	processors []Processor
 }
 
 // Instanciates a new logger with specified name, handlers and processors
 func NewLogger(name string) *Logger {
-	return &Logger{Name: name, handlers: []Handler{}, processors: []Processor{}}
+	return &Logger{Name: name, handlers: []HandlerInterface{}, processors: []Processor{}}
 }
 
 // Push a handler to the handlers stack
-func (l *Logger) PushHandler(h Handler) {
+func (l *Logger) PushHandler(h HandlerInterface) {
 	l.mu.Lock()
 	defer l.mu.Unlock()
-	handlers := make([]Handler, len(l.handlers))
+	handlers := make([]HandlerInterface, len(l.handlers))
 	copy(handlers, l.handlers)
 
-	l.handlers = []Handler{h}
+	l.handlers = []HandlerInterface{h}
 	l.handlers = append(l.handlers, handlers...)
 }
 

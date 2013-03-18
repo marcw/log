@@ -9,7 +9,7 @@ import (
 )
 
 func TestIsHandling(t *testing.T) {
-	h := &handler{level: EMERGENCY}
+	h := &Handler{Level: EMERGENCY}
 	if h.IsHandling(DEBUG) {
 		t.Error()
 	}
@@ -35,7 +35,7 @@ func TestIsHandling(t *testing.T) {
 		t.Error()
 	}
 
-	h = &handler{level: DEBUG}
+	h = &Handler{Level: DEBUG}
 	if !h.IsHandling(DEBUG) {
 		t.Error()
 	}
@@ -63,32 +63,32 @@ func TestIsHandling(t *testing.T) {
 }
 
 func TestPushAndPopProcessor(t *testing.T) {
-	h := &handler{}
+	h := &Handler{}
 	p1 := NewProcessor(func(r *Record) {})
 	p2 := NewProcessor(func(r *Record) {})
 	h.PushProcessor(p1)
 	h.PushProcessor(p2)
 
-	if len(h.processors) != 2 {
+	if len(h.Processors) != 2 {
 		t.Error()
 	}
-	if h.processors[0] != p2 {
+	if h.Processors[0] != p2 {
 		t.Error()
 	}
-	if h.processors[1] != p1 {
+	if h.Processors[1] != p1 {
 		t.Error()
 	}
 	h.PopProcessor()
-	if len(h.processors) != 1 {
+	if len(h.Processors) != 1 {
 		t.Error()
 	}
-	if h.processors[0] != p1 {
+	if h.Processors[0] != p1 {
 		t.Error()
 	}
 }
 
 func TestPrepare(t *testing.T) {
-	h := &handler{level: DEBUG}
+	h := &Handler{Level: DEBUG}
 	p1 := NewProcessor(func(r *Record) { r.Message = "p1" }) // Will be called last
 	p2 := NewProcessor(func(r *Record) { r.Message = "p2" })
 	h.PushProcessor(p1)
