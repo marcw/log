@@ -84,7 +84,7 @@ func (l *Logger) AddRecord(level Severity, message string, context DataBag) {
 
 	for k := range l.handlers {
 		if l.handlers[k].IsHandling(level) {
-			l.handlers[k].Handle(r)
+			l.handlers[k].Handle(*r)
 		}
 	}
 }

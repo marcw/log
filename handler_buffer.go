@@ -18,8 +18,8 @@ func NewBufferHandler(buffer *bytes.Buffer, level Severity) HandlerInterface {
 	return &bufferHandler{buffer, &Handler{Level: level}}
 }
 
-func (bh *bufferHandler) Handle(r *Record) {
-	bh.Handler.Prepare(r)
+func (bh *bufferHandler) Handle(r Record) {
+	bh.Handler.Prepare(&r)
 	bh.buffer.WriteString(r.Formatted)
 }
 

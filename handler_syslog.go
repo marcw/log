@@ -22,8 +22,8 @@ func (sh *syslogHandler) Close() {
 	sh.w.Close()
 }
 
-func (sh *syslogHandler) Handle(r *Record) {
-	sh.Handler.Prepare(r)
+func (sh *syslogHandler) Handle(r Record) {
+	sh.Handler.Prepare(&r)
 	switch r.Level {
 	case DEBUG:
 		sh.w.Debug(r.Formatted)
