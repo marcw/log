@@ -21,6 +21,13 @@ func Marshal(data interface{}) ([]byte, error) {
 	return e.buffer.Bytes(), err
 }
 
+// MarshalString is a proxy method for Marshal that drops any error and always return a string
+func MarshalString(data interface{}) string {
+	e := &encodeState{}
+	e.marshal("", data)
+	return e.buffer.String()
+}
+
 func (e *encodeState) marshal(prefix string, data interface{}) error {
 	if e.writeBegan {
 		e.writeBegan = false
