@@ -53,8 +53,9 @@ func (f *LineFormatter) Format(r *Record) {
 		"%channel%", r.Channel,
 		"%level_name%", r.LevelName,
 		"%message%", r.Message,
-		"%context%", r.Context.String(),
-		"%extra%", r.Extra.String())
+		"%context%", MarshalString(r.Context),
+		"%extra%", MarshalString(r.Extra),
+	)
 
 	r.Formatted = replacer.Replace(f.LineFormat)
 }

@@ -69,7 +69,7 @@ func (l *Logger) PopProcessor() {
 }
 
 // Log string with specified severity
-func (l *Logger) AddRecord(level Severity, message string, context DataBag) {
+func (l *Logger) AddRecord(level Severity, message string, context interface{}) {
 	l.mu.Lock()
 	defer l.mu.Unlock()
 	r := newRecord(level, l.Name, message, context)
@@ -90,83 +90,83 @@ func (l *Logger) AddRecord(level Severity, message string, context DataBag) {
 }
 
 // Log string with the DEBUG level
-func (l *Logger) AddDebug(message string, context DataBag) {
+func (l *Logger) AddDebug(message string, context interface{}) {
 	l.AddRecord(DEBUG, message, context)
 }
 
 // Log string with the INFO level
-func (l *Logger) AddInfo(message string, context DataBag) {
+func (l *Logger) AddInfo(message string, context interface{}) {
 	l.AddRecord(INFO, message, context)
 }
 
 // Log string with the NOTICE level
-func (l *Logger) AddNotice(message string, context DataBag) {
+func (l *Logger) AddNotice(message string, context interface{}) {
 	l.AddRecord(NOTICE, message, context)
 }
 
 // Log string with the WARNING level
-func (l *Logger) AddWarning(message string, context DataBag) {
+func (l *Logger) AddWarning(message string, context interface{}) {
 	l.AddRecord(WARNING, message, context)
 }
 
 // Log string with the ERROR level
-func (l *Logger) AddError(message string, context DataBag) {
+func (l *Logger) AddError(message string, context interface{}) {
 	l.AddRecord(ERROR, message, context)
 }
 
 // Log string with the CRITICAL level
-func (l *Logger) AddCritical(message string, context DataBag) {
+func (l *Logger) AddCritical(message string, context interface{}) {
 	l.AddRecord(CRITICAL, message, context)
 }
 
 // Log string with the ALERT level
-func (l *Logger) AddAlert(message string, context DataBag) {
+func (l *Logger) AddAlert(message string, context interface{}) {
 	l.AddRecord(ALERT, message, context)
 }
 
 // Log string with the EMERGENCY level
-func (l *Logger) AddEmergency(message string, context DataBag) {
+func (l *Logger) AddEmergency(message string, context interface{}) {
 	l.AddRecord(EMERGENCY, message, context)
 }
 
 // Log parameters with the DEBUG level
 func (l *Logger) Debug(v ...interface{}) {
-	l.AddDebug(fmt.Sprint(v...), make(DataBag))
+	l.AddDebug(fmt.Sprint(v...), nil)
 }
 
 // Log parameters with the INFO level
 func (l *Logger) Info(v ...interface{}) {
-	l.AddInfo(fmt.Sprint(v...), make(DataBag))
+	l.AddInfo(fmt.Sprint(v...), nil)
 }
 
 // Log parameters with the NOTICE level
 func (l *Logger) Notice(v ...interface{}) {
-	l.AddNotice(fmt.Sprint(v...), make(DataBag))
+	l.AddNotice(fmt.Sprint(v...), nil)
 }
 
 // Log parameters with the WARNING level
 func (l *Logger) Warning(v ...interface{}) {
-	l.AddWarning(fmt.Sprint(v...), make(DataBag))
+	l.AddWarning(fmt.Sprint(v...), nil)
 }
 
 // Log parameters with the ERROR level
 func (l *Logger) Error(v ...interface{}) {
-	l.AddError(fmt.Sprint(v...), make(DataBag))
+	l.AddError(fmt.Sprint(v...), nil)
 }
 
 // Log parameters with the CRITICAL level
 func (l *Logger) Critical(v ...interface{}) {
-	l.AddCritical(fmt.Sprint(v...), make(DataBag))
+	l.AddCritical(fmt.Sprint(v...), nil)
 }
 
 // Log parameters with the ALERT level
 func (l *Logger) Alert(v ...interface{}) {
-	l.AddAlert(fmt.Sprint(v...), make(DataBag))
+	l.AddAlert(fmt.Sprint(v...), nil)
 }
 
 // Log parameters with the EMERGENCY level
 func (l *Logger) Emergency(v ...interface{}) {
-	l.AddEmergency(fmt.Sprint(v...), make(DataBag))
+	l.AddEmergency(fmt.Sprint(v...), nil)
 }
 
 // Returns true if a Handler can handle this severity level

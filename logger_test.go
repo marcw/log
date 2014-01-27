@@ -141,7 +141,7 @@ func TestLoggerWithDefaultProcessor(t *testing.T) {
 	})
 	l.PushProcessor(p)
 	l.Debug("foobar")
-	if "foobar {\"go.date\":\"2009-11-10T23:00:00Z\"}" != buffer.String() {
+	if "foobar go.date=2009-11-10T23:00:00Z" != buffer.String() {
 		t.Error(buffer.String())
 	}
 }

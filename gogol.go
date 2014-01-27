@@ -5,8 +5,6 @@
 package gogol
 
 import (
-	"encoding/json"
-	"fmt"
 	"time"
 )
 
@@ -37,48 +35,17 @@ var Severities = map[Severity]string{
 
 // A record is a log message at a given time
 type Record struct {
-	Message   string    // Text message of the log
-	Formatted string    // Formatted version of the log (once all processors and formatters have done their jobs)
-	Level     Severity  // Severity level
-	LevelName string    // Severity name
-	Channel   string    // Logger's name
-	Time      time.Time // Creation date
-	Context   DataBag   // Context set by logger's caller
-	Extra     DataBag   // Extra values that can be added by Processors
+	Message   string                 // Text message of the log
+	Formatted string                 // Formatted version of the log (once all processors and formatters have done their jobs)
+	Level     Severity               // Severity level
+	LevelName string                 // Severity name
+	Channel   string                 // Logger's name
+	Time      time.Time              // Creation date
+	Context   interface{}            // Context set by logger's caller
+	Extra     map[string]interface{} // Extra values that can be added by Processors
 }
 
-type DataBag map[string]interface{}
-
-// Normalize data to a map of string
-func (e DataBag) Normalize() map[string]string {
-	normalized := make(map[string]string)
-
-	for k, v := range e {
-		switch x := v.(type) {
-		case time.Time:
-			normalized[k] = x.Format(time.RFC3339Nano)
-			break
-		case fmt.Stringer:
-			normalized[k] = x.String()
-			break
-		default:
-			normalized[k] = fmt.Sprint(v)
-		}
-	}
-
-	return normalized
-}
-
-func (e DataBag) String() string {
-	json, _ := json.Marshal(e.Normalize())
-	return string(json)
-}
-
-func (e DataBag) Add(key string, v interface{}) {
-	e[key] = v
-}
-
-func newRecord(level Severity, channel, message string, context DataBag) *Record {
+func newRecord(level Severity, channel, message string, context interface{}) *Record {
 	return &Record{
 		Message:   message,
 		Level:     level,
@@ -86,5 +53,5 @@ func newRecord(level Severity, channel, message string, context DataBag) *Record
 		Channel:   channel,
 		Time:      time.Now(),
 		Context:   context,
-		Extra:     make(DataBag)}
+		Extra:     make(map[string]interface{})}
 }
