@@ -141,7 +141,7 @@ func stringify(data interface{}) string {
 		value = t.UTC().Format(time.RFC3339)
 	case int:
 		value = strconv.Itoa(int(t))
-    case fmt.Stringer:
+	case fmt.Stringer:
 		value = t.String()
 	case string:
 		value = strconv.Quote(t)
