@@ -74,7 +74,7 @@ func (l *Logger) AddRecord(level Severity, message string, context interface{}) 
 	defer l.mu.Unlock()
 	r := newRecord(level, l.Name, message, context)
 
-	if !l.IsHandling(level) {
+	if !l.S(level) {
 		return
 	}
 
@@ -83,7 +83,7 @@ func (l *Logger) AddRecord(level Severity, message string, context interface{}) 
 	}
 
 	for k := range l.handlers {
-		if l.handlers[k].IsHandling(level) {
+		if l.handlers[k].S(level) {
 			l.handlers[k].Handle(*r)
 		}
 	}
@@ -170,9 +170,9 @@ func (l *Logger) Emergency(v ...interface{}) {
 }
 
 // Returns true if a Handler can handle this severity level
-func (l *Logger) IsHandling(level Severity) bool {
+func (l *Logger) S(level Severity) bool {
 	for k := range l.handlers {
-		if l.handlers[k].IsHandling(level) {
+		if l.handlers[k].S(level) {
 			return true
 		}
 	}

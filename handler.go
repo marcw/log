@@ -6,13 +6,13 @@ package gogol
 
 // HandlerInterface represents a type that sends log to a destination
 type HandlerInterface interface {
-	IsHandling(Severity) bool // Returns true if the handler accepts this severity
-	Handle(Record)            // Handle the log record
-	PushProcessor(Processor)  // Push a new processor to the handler's stack
-	PopProcessor()            // Removes a processor from the handler's stack
-	SetFormatter(Formatter)   // Set the formatter for this handler
-	GetFormatter() Formatter  // Returns the formatter used by this handler
-	Close()                   // Close the handler
+	S(Severity) bool         // Returns true if the handler accepts this severity
+	Handle(Record)           // Handle the log record
+	PushProcessor(Processor) // Push a new processor to the handler's stack
+	PopProcessor()           // Removes a processor from the handler's stack
+	SetFormatter(Formatter)  // Set the formatter for this handler
+	GetFormatter() Formatter // Returns the formatter used by this handler
+	Close()                  // Close the handler
 }
 
 // Handler is a somewhat a "abstract" type you can embed in your own handler.
@@ -23,7 +23,7 @@ type Handler struct {
 	Processors []Processor
 }
 
-func (h *Handler) IsHandling(level Severity) bool {
+func (h *Handler) S(level Severity) bool {
 	return level <= h.Level
 }
 

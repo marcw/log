@@ -10,54 +10,54 @@ import (
 
 func TestIsHandling(t *testing.T) {
 	h := &Handler{Level: EMERGENCY}
-	if h.IsHandling(DEBUG) {
+	if h.S(DEBUG) {
 		t.Error("handler should not handle DEBUG priority")
 	}
-	if h.IsHandling(INFO) {
+	if h.S(INFO) {
 		t.Error("handler should not handle INFO priority")
 	}
-	if h.IsHandling(NOTICE) {
+	if h.S(NOTICE) {
 		t.Error("handler should not handle EMERGENCY priority")
 	}
-	if h.IsHandling(WARNING) {
+	if h.S(WARNING) {
 		t.Error("handler should not handle WARNING priority")
 	}
-	if h.IsHandling(ERROR) {
+	if h.S(ERROR) {
 		t.Error("handler should not handle ERROR priority")
 	}
-	if h.IsHandling(CRITICAL) {
+	if h.S(CRITICAL) {
 		t.Error("handler should not handle CRITICAL priority")
 	}
-	if h.IsHandling(ALERT) {
+	if h.S(ALERT) {
 		t.Error("handler should not handle ALERT priority")
 	}
-	if !h.IsHandling(EMERGENCY) {
+	if !h.S(EMERGENCY) {
 		t.Error("handler should handle EMERGENCY priority")
 	}
 
 	h = &Handler{Level: DEBUG}
-	if !h.IsHandling(DEBUG) {
+	if !h.S(DEBUG) {
 		t.Error("handler should handle DEBUG priority")
 	}
-	if !h.IsHandling(INFO) {
+	if !h.S(INFO) {
 		t.Error("handler should handle INFO priority")
 	}
-	if !h.IsHandling(NOTICE) {
+	if !h.S(NOTICE) {
 		t.Error("handler should handle NOTICE priority")
 	}
-	if !h.IsHandling(WARNING) {
+	if !h.S(WARNING) {
 		t.Error("handler should handle WARNING priority")
 	}
-	if !h.IsHandling(ERROR) {
+	if !h.S(ERROR) {
 		t.Error("handler should handle ERROR priority")
 	}
-	if !h.IsHandling(CRITICAL) {
+	if !h.S(CRITICAL) {
 		t.Error("handler should handle CRITICAL priority")
 	}
-	if !h.IsHandling(ALERT) {
+	if !h.S(ALERT) {
 		t.Error("handler should handle ALERTY priority")
 	}
-	if !h.IsHandling(EMERGENCY) {
+	if !h.S(EMERGENCY) {
 		t.Error("handler should handle EMERGENCY priority")
 	}
 }

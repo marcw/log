@@ -13,7 +13,7 @@ func TestBufferHandler(t *testing.T) {
 	buffer := new(bytes.Buffer)
 	h := NewBufferHandler(buffer, WARNING)
 
-	if h.IsHandling(DEBUG) {
+	if h.S(DEBUG) {
 		t.Error("handler should not handle DEBUG priority")
 	}
 }
