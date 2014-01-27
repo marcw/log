@@ -87,20 +87,20 @@ func TestLoggerPushPopProcessors(t *testing.T) {
 	l.PushProcessor(p2)
 
 	if len(l.processors) != 2 {
-		t.Error()
+		t.Error("processor count mismatch")
 	}
 	if l.processors[0] != p2 {
-		t.Error()
+		t.Error("processor mismatch")
 	}
 	if l.processors[1] != p1 {
-		t.Error()
+		t.Error("processor mismatch")
 	}
 	l.PopProcessor()
 	if len(l.processors) != 1 {
-		t.Error()
+		t.Error("processor count mismatch")
 	}
 	if l.processors[0] != p1 {
-		t.Error()
+		t.Error("processor mismatch")
 	}
 }
 
@@ -113,20 +113,20 @@ func TestLoggerPushPopHandler(t *testing.T) {
 	l.PushHandler(h2)
 
 	if len(l.handlers) != 2 {
-		t.Error()
+		t.Error("processor count mismatch")
 	}
 	if l.handlers[0] != h2 {
-		t.Error()
+		t.Error("processor mismatch")
 	}
 	if l.handlers[1] != h1 {
-		t.Error()
+		t.Error("processor mismatch")
 	}
 	l.PopHandler()
 	if len(l.handlers) != 1 {
-		t.Error()
+		t.Error("processor count mismatch")
 	}
 	if l.handlers[0] != h1 {
-		t.Error()
+		t.Error("processor mismatch")
 	}
 }
 

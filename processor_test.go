@@ -15,12 +15,12 @@ func TestRuntimeProcessor(t *testing.T) {
 	r := newRecord(DEBUG, "test", "foobar", context)
 	RuntimeProcessor.Process(r)
 	if r.Extra["go.num_cpu"] != runtime.NumCPU() {
-		t.Error()
+		t.Error("go.num_cpu is not correct")
 	}
 	if r.Extra["go.version"] != runtime.Version() {
-		t.Error()
+		t.Error("go.version is not correct")
 	}
 	if r.Extra["go.num_goroutines"] != runtime.NumGoroutine() {
-		t.Error()
+		t.Error("go.num_goroutines is not correct")
 	}
 }

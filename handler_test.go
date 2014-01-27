@@ -11,54 +11,54 @@ import (
 func TestIsHandling(t *testing.T) {
 	h := &Handler{Level: EMERGENCY}
 	if h.IsHandling(DEBUG) {
-		t.Error()
+		t.Error("handler should not handle DEBUG priority")
 	}
 	if h.IsHandling(INFO) {
-		t.Error()
+		t.Error("handler should not handle INFO priority")
 	}
 	if h.IsHandling(NOTICE) {
-		t.Error()
+		t.Error("handler should not handle EMERGENCY priority")
 	}
 	if h.IsHandling(WARNING) {
-		t.Error()
+		t.Error("handler should not handle WARNING priority")
 	}
 	if h.IsHandling(ERROR) {
-		t.Error()
+		t.Error("handler should not handle ERROR priority")
 	}
 	if h.IsHandling(CRITICAL) {
-		t.Error()
+		t.Error("handler should not handle CRITICAL priority")
 	}
 	if h.IsHandling(ALERT) {
-		t.Error()
+		t.Error("handler should not handle ALERT priority")
 	}
 	if !h.IsHandling(EMERGENCY) {
-		t.Error()
+		t.Error("handler should handle EMERGENCY priority")
 	}
 
 	h = &Handler{Level: DEBUG}
 	if !h.IsHandling(DEBUG) {
-		t.Error()
+		t.Error("handler should handle DEBUG priority")
 	}
 	if !h.IsHandling(INFO) {
-		t.Error()
+		t.Error("handler should handle INFO priority")
 	}
 	if !h.IsHandling(NOTICE) {
-		t.Error()
+		t.Error("handler should handle NOTICE priority")
 	}
 	if !h.IsHandling(WARNING) {
-		t.Error()
+		t.Error("handler should handle WARNING priority")
 	}
 	if !h.IsHandling(ERROR) {
-		t.Error()
+		t.Error("handler should handle ERROR priority")
 	}
 	if !h.IsHandling(CRITICAL) {
-		t.Error()
+		t.Error("handler should handle CRITICAL priority")
 	}
 	if !h.IsHandling(ALERT) {
-		t.Error()
+		t.Error("handler should handle ALERTY priority")
 	}
 	if !h.IsHandling(EMERGENCY) {
-		t.Error()
+		t.Error("handler should handle EMERGENCY priority")
 	}
 }
 
@@ -70,20 +70,20 @@ func TestPushAndPopProcessor(t *testing.T) {
 	h.PushProcessor(p2)
 
 	if len(h.Processors) != 2 {
-		t.Error()
+		t.Error("number of processor should be equal to 2")
 	}
 	if h.Processors[0] != p2 {
-		t.Error()
+		t.Error("processor mismatch")
 	}
 	if h.Processors[1] != p1 {
-		t.Error()
+		t.Error("processor mismatch")
 	}
 	h.PopProcessor()
 	if len(h.Processors) != 1 {
-		t.Error()
+		t.Error("number of processor should be equal to 1")
 	}
 	if h.Processors[0] != p1 {
-		t.Error()
+		t.Error("processor mistmatch")
 	}
 }
 

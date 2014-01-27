@@ -14,6 +14,6 @@ func TestBufferHandler(t *testing.T) {
 	h := NewBufferHandler(buffer, WARNING)
 
 	if h.IsHandling(DEBUG) {
-		t.Error()
+		t.Error("handler should not handle DEBUG priority")
 	}
 }
