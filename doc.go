@@ -3,7 +3,7 @@
 // license that can be found in the LICENSE file.
 
 /*
-log is a log package heavily inspired by monolog/logbook.
+Package log implements logging in a similar fashion than monolog/logbook
 
     Usage:
 
