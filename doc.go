@@ -3,12 +3,12 @@
 // license that can be found in the LICENSE file.
 
 /*
-gogol is a log package heavily inspired by monolog/logbook.
+log is a log package heavily inspired by monolog/logbook.
 
     Usage:
 
     import (
-        log "github.com/marcw/gogol"
+        "github.com/marcw/log"
     )
 
     // Will log to stdout every message where severity >= DEBUG
@@ -27,4 +27,4 @@ gogol is a log package heavily inspired by monolog/logbook.
     // Will output to both stdout and stderr "This is critical"
     logger.Critical("This is critical")
 */
-package gogol
+package log

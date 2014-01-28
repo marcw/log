@@ -1,4 +1,4 @@
-package gogol
+package log
 
 import (
 	"testing"

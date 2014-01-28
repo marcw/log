@@ -1,6 +1,6 @@
-# Gogol
+# Log
 
-[![Build Status](https://travis-ci.org/marcw/gogol.png?branch=master)](https://travis-ci.org/marcw/gogol)
+[![Build Status](https://travis-ci.org/marcw/log.png?branch=master)](https://travis-ci.org/marcw/log)
 
 A log package based on PHP's excellent Monolog library.
 
@@ -18,7 +18,7 @@ upon the python logbook package itself. I decided to port it to go and enjoy.
 
 ## Documentation
 
-Documentation is available at [godoc.org](http://godoc.org/github.com/marcw/gogol)
+Documentation is available at [godoc.org](http://godoc.org/github.com/marcw/log)
 
 ## Acknowledgements
 
@@ -27,5 +27,5 @@ This package is heavily inspired by Jordi Boggiano's
 
 ## License
 
-The Gogol code is free to use and distribute, under the [MIT
-license](https://github.com/marcw/gogol/blob/master/LICENSE).
+The Log code is free to use and distribute, under the [MIT
+license](https://github.com/marcw/log/blob/master/LICENSE).
