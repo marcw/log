@@ -134,9 +134,25 @@ func (l *Logger) Debug(v ...interface{}) {
 	l.AddDebug(fmt.Sprint(v...), nil)
 }
 
+func (l *Logger) Debugf(format string, v ...interface{}) {
+	l.AddDebug(fmt.Sprintf(format, v...), nil)
+}
+
+func (l *Logger) Debugln(v ...interface{}) {
+	l.AddDebug(fmt.Sprintln(v...), nil)
+}
+
 // Log parameters with the INFO level
 func (l *Logger) Info(v ...interface{}) {
 	l.AddInfo(fmt.Sprint(v...), nil)
+}
+
+func (l *Logger) Infof(format string, v ...interface{}) {
+	l.AddInfo(fmt.Sprintf(format, v...), nil)
+}
+
+func (l *Logger) Infoln(v ...interface{}) {
+	l.AddInfo(fmt.Sprintln(v...), nil)
 }
 
 // Log parameters with the NOTICE level
@@ -144,9 +160,25 @@ func (l *Logger) Notice(v ...interface{}) {
 	l.AddNotice(fmt.Sprint(v...), nil)
 }
 
+func (l *Logger) Noticef(format string, v ...interface{}) {
+	l.AddNotice(fmt.Sprintf(format, v...), nil)
+}
+
+func (l *Logger) Noticeln(v ...interface{}) {
+	l.AddNotice(fmt.Sprintln(v...), nil)
+}
+
 // Log parameters with the WARNING level
 func (l *Logger) Warning(v ...interface{}) {
 	l.AddWarning(fmt.Sprint(v...), nil)
+}
+
+func (l *Logger) Warningf(format string, v ...interface{}) {
+	l.AddWarning(fmt.Sprintf(format, v...), nil)
+}
+
+func (l *Logger) Warningln(v ...interface{}) {
+	l.AddWarning(fmt.Sprintln(v...), nil)
 }
 
 // Log parameters with the ERROR level
@@ -154,9 +186,25 @@ func (l *Logger) Error(v ...interface{}) {
 	l.AddError(fmt.Sprint(v...), nil)
 }
 
+func (l *Logger) Errorf(format string, v ...interface{}) {
+	l.AddError(fmt.Sprintf(format, v...), nil)
+}
+
+func (l *Logger) Errorln(v ...interface{}) {
+	l.AddError(fmt.Sprintln(v...), nil)
+}
+
 // Log parameters with the CRITICAL level
 func (l *Logger) Critical(v ...interface{}) {
 	l.AddCritical(fmt.Sprint(v...), nil)
+}
+
+func (l *Logger) Criticalf(format string, v ...interface{}) {
+	l.AddCritical(fmt.Sprintf(format, v...), nil)
+}
+
+func (l *Logger) Criticalln(v ...interface{}) {
+	l.AddCritical(fmt.Sprintln(v...), nil)
 }
 
 // Log parameters with the ALERT level
@@ -164,9 +212,25 @@ func (l *Logger) Alert(v ...interface{}) {
 	l.AddAlert(fmt.Sprint(v...), nil)
 }
 
+func (l *Logger) Alertf(format string, v ...interface{}) {
+	l.AddAlert(fmt.Sprintf(format, v...), nil)
+}
+
+func (l *Logger) Alertln(v ...interface{}) {
+	l.AddAlert(fmt.Sprintln(v...), nil)
+}
+
 // Log parameters with the EMERGENCY level
 func (l *Logger) Emergency(v ...interface{}) {
 	l.AddEmergency(fmt.Sprint(v...), nil)
+}
+
+func (l *Logger) Emergencyf(format string, v ...interface{}) {
+	l.AddEmergency(fmt.Sprintf(format, v...), nil)
+}
+
+func (l *Logger) Emergencyln(v ...interface{}) {
+	l.AddEmergency(fmt.Sprintln(v...), nil)
 }
 
 // Returns true if a Handler can handle this severity level
