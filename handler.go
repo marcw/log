@@ -7,6 +7,7 @@ package log
 // HandlerInterface represents a type that sends log to a destination
 type HandlerInterface interface {
 	S(Severity) bool         // Returns true if the handler accepts this severity
+	SetSeverity(Severity)    // Changes the severity threshold of the handler
 	Handle(Record)           // Handle the log record
 	PushProcessor(Processor) // Push a new processor to the handler's stack
 	PopProcessor()           // Removes a processor from the handler's stack
@@ -21,6 +22,10 @@ type Handler struct {
 	Level      Severity
 	Formatter  Formatter
 	Processors []Processor
+}
+
+func (h *Handler) SetSeverity(level Severity) {
+	h.Level = level
 }
 
 func (h *Handler) S(level Severity) bool {
