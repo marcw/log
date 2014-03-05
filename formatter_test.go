@@ -19,7 +19,7 @@ func TestMinimalLineFormatter(t *testing.T) {
 }
 
 func TestSimpleLineFormatter(t *testing.T) {
-	r := newRecord(DEBUG, "foobar", "msg", map[string]string{"foo": "bar"})
+	r := newRecord(DEBUG, "foobar", "msg\n", map[string]string{"foo": "bar"})
 	r.Time = time.Date(2009, 11, 10, 23, 0, 0, 0, time.UTC)
 	formatter := NewSimpleLineFormatter()
 	formatter.Format(r)
