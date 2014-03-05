@@ -52,7 +52,7 @@ func (f *LineFormatter) Format(r *Record) {
 		"%datetime%", r.Time.Format(f.TimeFormat),
 		"%channel%", r.Channel,
 		"%level_name%", r.LevelName,
-		"%message%", r.Message,
+		"%message%", strings.TrimRight(r.Message, "\n"),
 		"%context%", MarshalString(r.Context),
 		"%extra%", MarshalString(r.Extra),
 	)
