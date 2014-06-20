@@ -11,7 +11,7 @@ import (
 
 var stdFormatter = &LineFormatter{LineFormat: "%datetime% %level_name%: %message%"}
 var stdHandler = &writeCloserHandler{wc: os.Stderr, Handler: &Handler{Level: DEBUG, Formatter: stdFormatter}}
-var std = &Logger{Name: "", handlers: []HandlerInterface{stdHandler}, processors: []Processor{}}
+var DefaultLogger = &Logger{Name: "", handlers: []HandlerInterface{stdHandler}, processors: []Processor{}}
 
 // Fatal is equivalent to a call to Print followed by a call to os.Exit(1)
 func Fatal(v ...interface{}) {
@@ -54,16 +54,16 @@ func Panicln(v ...interface{}) {
 
 // Print calls Debug in an instance of Logger where the only handler outputs to Stderr
 func Print(v ...interface{}) {
-	std.Debug(v...)
+	DefaultLogger.Debug(v...)
 }
 
 // Printf calls Debug in an instance of Logger where the only handler outputs to Stderr
 // Arguments are handled in the manner of fmt.Printf.
 func Printf(format string, v ...interface{}) {
-	std.Debug(fmt.Sprintf(format, v...))
+	DefaultLogger.Debug(fmt.Sprintf(format, v...))
 }
 
 // Arguments are handled in the manner of fmt.Println.
 func Println(v ...interface{}) {
-	std.Debug(fmt.Sprintln(v...))
+	DefaultLogger.Debug(fmt.Sprintln(v...))
 }
