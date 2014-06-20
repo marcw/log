@@ -37,6 +37,9 @@ func (e *encodeState) marshal(prefix string, data interface{}) error {
 	}
 
 	value := reflect.ValueOf(data)
+	if value.Kind() == reflect.Invalid {
+		return nil
+	}
 	if value.Kind() == reflect.Ptr {
 		return e.marshalPtr(prefix, value.Interface())
 	}
@@ -49,7 +52,8 @@ func (e *encodeState) marshal(prefix string, data interface{}) error {
 		return e.marshalMap(prefix, value.Interface())
 	}
 
-	return fmt.Errorf("don't know how to marshal this type")
+	_, err := e.buffer.WriteString(fmt.Sprint(data))
+	return err
 }
 
 func (e *encodeState) writeTab() error {
