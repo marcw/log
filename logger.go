@@ -72,11 +72,12 @@ func (l *Logger) PopProcessor() {
 func (l *Logger) AddRecord(level Severity, message string, context interface{}) {
 	l.mu.Lock()
 	defer l.mu.Unlock()
-	r := newRecord(level, l.Name, message, context)
 
 	if !l.S(level) {
 		return
 	}
+
+	r := newRecord(level, l.Name, message, context)
 
 	for k := range l.processors {
 		l.processors[k].Process(r)
